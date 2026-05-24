@@ -1,9 +1,22 @@
+buildscript {
+  repositories {
+    maven {
+      url = "https://repo.spongepowered.org/repository/maven-public/"
+    }
+  }
+  dependencies {
+    classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
+  }
+}
+
 plugins {
   id 'eclipse'
   id 'idea'
   id 'maven-publish'
   id 'net.minecraftforge.gradle' version '[6.0,6.2)'
 }
+
+apply plugin: 'org.spongepowered.mixin'
 
 version = mod_version
 group = mod_group_id
@@ -94,11 +107,11 @@ dependencies {
   // compileOnly fg.deobf("mezz.jei:jei-${mc_version}-forge-api:${jei_version}")
   // runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}-forge:${jei_version}")
 
-  implementation("dev.ftb.mods:ftb-ultimine-forge:${ultimine_version}") {
+  implementation(fg.deobf("dev.ftb.mods:ftb-ultimine-forge:${ultimine_version}", {
     transitive = false
-  }
-  runtimeOnly "dev.ftb.mods:ftb-library-forge:2001.2.12"
-  runtimeOnly "dev.architectury:architectury-forge:9.2.14"
+  }))
+  runtimeOnly fg.deobf("dev.ftb.mods:ftb-library-forge:2001.2.12")
+  runtimeOnly fg.deobf("dev.architectury:architectury-forge:9.2.14")
 }
 
 tasks.named('processResources', ProcessResources).configure {
@@ -151,4 +164,8 @@ publishing {
 
 tasks.withType(JavaCompile).configureEach {
   options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
+}
+
+mixin {
+  add sourceSets.main, "main.refmap.json"
 }
