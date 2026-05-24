@@ -13,7 +13,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(FramedBlocksUltimine.MODID)
 public class FramedBlocksUltimine {
-  public static final String MODID = "framed-blocks-ultimine";
+  public static final String MODID = "framed_blocks_ultimine";
 
   public FramedBlocksUltimine(FMLJavaModLoadingContext context) {
     IEventBus modEventBus = context.getModEventBus();
