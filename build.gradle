@@ -96,6 +96,12 @@ repositories {
     }
   }
   maven { url = "https://maven.architectury.dev/" }
+  maven {
+    url = "https://cursemaven.com"
+    content {
+      includeGroup "curse.maven"
+    }
+  }
 }
 
 dependencies {
@@ -107,7 +113,8 @@ dependencies {
   // compileOnly fg.deobf("mezz.jei:jei-${mc_version}-forge-api:${jei_version}")
   // runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}-forge:${jei_version}")
 
-  implementation(fg.deobf("dev.ftb.mods:ftb-ultimine-forge:${ultimine_version}", {
+  implementation fg.deobf("curse.maven:framedblocks-441647:7386520")
+  implementation(fg.deobf("dev.ftb.mods:ftb-ultimine-forge:2001.1.8", {
     transitive = false
   }))
   runtimeOnly fg.deobf("dev.ftb.mods:ftb-library-forge:2001.2.12")
@@ -120,7 +127,7 @@ tasks.named('processResources', ProcessResources).configure {
       forge_version         : forge_version, forge_version_range: forge_version_range,
       loader_version_range  : loader_version_range,
       mod_id                : mod_id, mod_name: mod_name, mod_license: mod_license, mod_version: mod_version,
-      mod_authors           : mod_authors, mod_description: mod_description, ultimine_version: ultimine_version,
+      mod_authors           : mod_authors, mod_description: mod_description, framedblocks_version_range: framedblocks_version_range,
       ultimine_version_range: ultimine_version_range
   ]
   inputs.properties replaceProperties

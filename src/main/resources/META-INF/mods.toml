@@ -67,3 +67,9 @@ description='''${mod_description}'''
     versionRange="${ultimine_version_range}"
     ordering="NONE"
     side="BOTH"
+[[dependencies.${mod_id}]]
+    modId="framedblocks"
+    mandatory=true
+    versionRange="${framedblocks_version_range}"
+    ordering="NONE"
+    side="BOTH"
