@@ -5,8 +5,11 @@ import dev.ftb.mods.ftbultimine.api.rightclick.RightClickHandler;
 import dev.ftb.mods.ftbultimine.shape.ShapeContext;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import xfacthd.framedblocks.api.block.IFramedBlock;
 
 import java.util.Collection;
 
@@ -27,6 +30,21 @@ enum FramedBlocksRightClickHandler implements RightClickHandler {
 
   @Override
   public int handleRightClickBlock(ShapeContext shapeContext, InteractionHand hand, Collection<BlockPos> positions) {
-    return 0;
+    return (int) positions.stream().filter(pos -> {
+      var blockstate = shapeContext.block(pos);
+      var block = blockstate.getBlock();
+      var player = shapeContext.player();
+      if (!(block instanceof IFramedBlock framedBlock)) return false;
+
+      var interaction = framedBlock.handleUse(
+          blockstate,
+          player.level(),
+          pos,
+          player,
+          InteractionHand.MAIN_HAND,
+          new BlockHitResult(pos.getCenter(), shapeContext.face(), pos, false)
+      );
+      return interaction.consumesAction();
+    }).count();
   }
 }
