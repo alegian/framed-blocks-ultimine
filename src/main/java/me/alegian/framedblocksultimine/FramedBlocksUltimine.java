@@ -1,41 +1,32 @@
 package me.alegian.framedblocksultimine;
 
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.server.ServerStartingEvent;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import dev.ftb.mods.ftbultimine.api.rightclick.RegisterRightClickHandlerEvent;
+import dev.ftb.mods.ftbultimine.api.rightclick.RightClickHandler;
+import dev.ftb.mods.ftbultimine.shape.ShapeContext;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.InteractionHand;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
-// The value here should match an entry in the META-INF/mods.toml file
+import java.util.Collection;
+
 @Mod(FramedBlocksUltimine.MODID)
 public class FramedBlocksUltimine {
   public static final String MODID = "framed_blocks_ultimine";
 
   public FramedBlocksUltimine(FMLJavaModLoadingContext context) {
-    IEventBus modEventBus = context.getModEventBus();
-
-    // Register the commonSetup method for modloading
-    modEventBus.addListener(this::commonSetup);
-
-    // Register ourselves for server and other game events we are interested in
-    MinecraftForge.EVENT_BUS.register(this);
+    RegisterRightClickHandlerEvent.REGISTER.register(dispatcher ->
+        dispatcher.registerHandler(FramedBlocksRightClickHandler.INSTANCE)
+    );
   }
+}
 
-  private void commonSetup(final FMLCommonSetupEvent event) {
-  }
 
-  @SubscribeEvent
-  public void onServerStarting(ServerStartingEvent event) {
-  }
+enum FramedBlocksRightClickHandler implements RightClickHandler {
+  INSTANCE;
 
-  @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-  public static class ClientModEvents {
-    @SubscribeEvent
-    public static void onClientSetup(FMLClientSetupEvent event) {
-    }
+  @Override
+  public int handleRightClickBlock(ShapeContext shapeContext, InteractionHand hand, Collection<BlockPos> positions) {
+    return 0;
   }
 }

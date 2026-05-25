@@ -117,8 +117,8 @@ dependencies {
   implementation(fg.deobf("dev.ftb.mods:ftb-ultimine-forge:2001.1.8", {
     transitive = false
   }))
+  implementation fg.deobf("dev.architectury:architectury-forge:9.2.14")
   runtimeOnly fg.deobf("dev.ftb.mods:ftb-library-forge:2001.2.12")
-  runtimeOnly fg.deobf("dev.architectury:architectury-forge:9.2.14")
 }
 
 tasks.named('processResources', ProcessResources).configure {
@@ -128,7 +128,7 @@ tasks.named('processResources', ProcessResources).configure {
       loader_version_range  : loader_version_range,
       mod_id                : mod_id, mod_name: mod_name, mod_license: mod_license, mod_version: mod_version,
       mod_authors           : mod_authors, mod_description: mod_description, framedblocks_version_range: framedblocks_version_range,
-      ultimine_version_range: ultimine_version_range
+      ultimine_version_range: ultimine_version_range, architectury_version_range: architectury_version_range
   ]
   inputs.properties replaceProperties
 
