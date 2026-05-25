@@ -26,10 +26,16 @@ enum FramedBlocksRightClickHandler implements RightClickHandler {
 
   @Override
   public int handleRightClickBlock(ShapeContext shapeContext, InteractionHand hand, Collection<BlockPos> positions) {
+    var player = shapeContext.player();
+    var hitResult = player.pick(player.getBlockReach(), 0f, false);
+    if (!(hitResult instanceof BlockHitResult blockHitResult)) return 0;
+    var relativeHitLocation = blockHitResult.getLocation().subtract(
+        blockHitResult.getBlockPos().getCenter()
+    );
+
     return (int) positions.stream().filter(pos -> {
       var blockstate = shapeContext.block(pos);
       var block = blockstate.getBlock();
-      var player = shapeContext.player();
       if (!(block instanceof IFramedBlock framedBlock)) return false;
 
       var interaction = framedBlock.handleUse(
@@ -38,7 +44,7 @@ enum FramedBlocksRightClickHandler implements RightClickHandler {
           pos,
           player,
           InteractionHand.MAIN_HAND,
-          new BlockHitResult(pos.getCenter(), shapeContext.face(), pos, false)
+          new BlockHitResult(pos.getCenter().add(relativeHitLocation), shapeContext.face(), pos, false)
       );
       return interaction.consumesAction();
     }).count();
