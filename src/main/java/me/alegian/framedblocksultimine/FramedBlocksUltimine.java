@@ -5,19 +5,15 @@ import dev.ftb.mods.ftbultimine.api.rightclick.RightClickHandler;
 import dev.ftb.mods.ftbultimine.shape.ShapeContext;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import xfacthd.framedblocks.api.block.IFramedBlock;
 
 import java.util.Collection;
 
-@Mod(FramedBlocksUltimine.MODID)
+@Mod("framed_blocks_ultimine")
 public class FramedBlocksUltimine {
-  public static final String MODID = "framed_blocks_ultimine";
-
-  public FramedBlocksUltimine(FMLJavaModLoadingContext context) {
+  public FramedBlocksUltimine() {
     RegisterRightClickHandlerEvent.REGISTER.register(dispatcher ->
         dispatcher.registerHandler(FramedBlocksRightClickHandler.INSTANCE)
     );
