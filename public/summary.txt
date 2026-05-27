@@ -1,0 +1,1 @@
+A compatibility mod that allows FTB Ultimine to mass-right-click Framed Blocks.
